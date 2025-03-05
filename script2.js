@@ -5,14 +5,6 @@ let description = document.getElementById('description')
 let imgurl = document.getElementById('link')
 //empty array
 let holdarraystr =JSON.parse(localStorage.getItem("userlister")) || []
-if(holdarraystr==[]){
-
-}
-else{
-    for (let i = 0; i < holdarraystr.length; i++) {
-        divlist.innerHTML += holdarraystr[i]
-    }
-}
 // ui holder
 let uiholder
 let getit
@@ -21,7 +13,7 @@ let trash = document.getElementById('trash')
 let addbtn = document.getElementById('add')
 let deletebtn = document.getElementById('delete')
 //click count
-let clkcount =[]
+let clkcount = JSON.parse(localStorage.getItem("clkcount"))||[]
 // functionality
 addbtn.addEventListener('click', () => {
 
@@ -33,7 +25,7 @@ addbtn.addEventListener('click', () => {
     }
     else {
         clkcount.push(1)
-        localStorage.setItem("clkcount", JSON.stringify(clkcount))
+        localStorage.setItem("clkcount",JSON.stringify(clkcount))
         uiholder = ` <div class="listcon">
         <div class="img">
         <img src="${imgurl.value}" alt="" width="100" height="100"
@@ -43,11 +35,10 @@ addbtn.addEventListener('click', () => {
         <h1>${moviename.value}</h1>
         <h5>${description.value}</h5>
         </div>
-        <div class="cross"><button onclick="deleted()" class="btn" value="${clkcount.lastIndexOf()}" id="trash" ><i class="fa-solid fa-trash"></i></button></div>
+       <div class="cross"><button class="btn delbtn" onclick="deleted()" value="${clkcount.length-1}"><i class="fa-solid fa-trash"></i></button></div>
         
         </div>
         `
-        localStorage.setItem("clkcount", JSON.stringify(clkcount))
         // pushing in array named holder
         holdarraystr.push(uiholder)
         
@@ -74,11 +65,10 @@ deletebtn.addEventListener('click', () => {
     }
 })
 
-function deleted(){
+function deleted() {
     holdarraystr = JSON.parse(localStorage.getItem("uselister"))
     holdarraystr.splice(trash.value,1)
     localStorage.setItem("userlister", JSON.stringify(holdarraystr))
     clkcount.pop()
-    localStorage.setItem("clkcount", JSON.stringify(clkcount))
+    JSON.stringify("clkcount",localStorage.setItem(clkcount))
 }
-
